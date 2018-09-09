@@ -2,27 +2,35 @@
 <html>
 <head>
 	<title>XnA</title>
+	<!-- Hojas de estilo-->
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link href="select2/select2.min.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="./sweetalert/sweetalert2.css">
+	<link rel="shortcut icon" href="./media/fav.png" />
+	<link rel="stylesheet" type="text/css" href="./css/style.css">
+	
+	<!-- meta-->
 	<meta charset="utf-8">
 	<meta name="google-site-verification" content="pocTIPouEACXEeQAOqsrKQ4EW_7rg951YejnOzw2zm0" />
-	<link rel="shortcut icon" href="./media/fav.png" />
+
+	<!-- scripts-->
 	<script src="js/bootstrap.js"></script>
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+	<script src="./js/jquery.min.js"></script>
+	<script src="./select2/select2.min.js"></script>
 	<script src="./sweetalert/sweetalert2.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="./sweetalert/sweetalert2.css">
+	
 </head>
 <body>
 	<div class="container">
-		<div class="col-md-4" style="margin: 0">
-			<img src="./media/XnA-big.png" class="img-responsive" alt="Cinque Terre">
+		<div class="row">
+			<div class="col-md-6">
+				<img src="./media/XnA-big.png" class="img-responsive" alt="Cinque Terre">
+
+			</div>
+			<div class="col-md-6">
+				<h1 class="eslogan"> No need to add, just chat</h1>
+			</div>
 		</div>
-		<div class="col-md-8">
-			<h1> No need to add, just chat</h1>
-		</div>
-		<div class="clearfix"></div>
-		
 		<div class="row">
 			<div class="col-lg-6 form-group">
 				<label>Country of the phone to chat:</label>
@@ -61,7 +69,7 @@
 				swal("Error", "Phone field isn't a phone number", "error");
 				return;
 				
-			}
+			} 
 
 			var url = "https://api.whatsapp.com/send?phone="+pais+num;
 			if (what) {
@@ -76,12 +84,24 @@
 			location.replace(url);
 		}
 		function link(url){
-			swal("Here's your link",url,"info");
+			var num = $("#num").val();
+			$("#num").val(url);
+			clipboardfn();
+			$("#num").val(num);
+			swal("The link was copied to your clipboard",url,"info");
 		}
 			
 		function isNumeric(n){
 			return!isNaN(parseFloat(n))&& isFinite(n);
 		}
+		
+		function clipboardfn() {
+  			var copyText = document.getElementById("num");
+ 			copyText.select();
+  			document.execCommand("copy");
+  			return true;
+		}
+
 	</script>
 </body>
 </html>
