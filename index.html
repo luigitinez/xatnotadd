@@ -28,11 +28,13 @@
     $.each(json,function(index,json){
     	if(json.dial_code){
     		json.dial_code = json.dial_code.substring(1);
-    		select.append($("<option></option>").attr("value", json.dial_code).text(json.name));	
+    		select.append($("<option></option>").attr("value", json.dial_code).text(json.name).attr("data-pais",json.code));	
     	}
     	
     });     
-    $("#conlab").append(select);   
+    $("#conlab").append(select); 
+
+
   });  
 
 	</script>
@@ -51,17 +53,17 @@
 		<div class="row">
 			<div class="col-lg-6 form-group">
 				<label id="conlab">Country of the phone to chat:</label>
-				<!--<select class="js-example-basic-single form-control" name="pais" id="pais" data-placeholder="Select a state">
-				  <option value="34">Spain</option>
-				  <option value="93">Afganistan</option>
-				  <option value="378">Andorra</option>
-				  <option value="378">Andorra</option>
-				  <option value="90">Turkey</option>
-				</select>-->
+				
 			</div>
 			<div class="col-lg-6 form-group">
 				<label>Phone number to chat with:</label>
 				<input type="text" id="num" name="num" class="form-control">
+			</div> 
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<label>Message: (not mandatory)</label>
+				<textarea class="form-control" rows="5" id="comment"></textarea>
 			</div>
 		</div>
 		<div class="row">
@@ -80,15 +82,18 @@
 
 			var pais = $("#pais").val();
 			var num = $("#num").val();
-			
+			var txt = $("#comment").val();
 			if (!isNumeric(num)) {
 		
 				swal("Error", "Phone field isn't a phone number", "error");
 				return;
 				
 			} 
-
 			var url = "https://api.whatsapp.com/send?phone="+pais+num;
+			if (txt) {
+	    		var uri = encodeURI(txt);
+				url = url + "&text=" + uri;
+			}
 			if (what) {
 				link(url);
 			}else{
@@ -98,7 +103,8 @@
 		}
 		//redirecciona a la api de whastapp
 		function send(url){
-			location.replace(url);
+			window.open(url,"name");//open in new tab and focus it
+			//location.replace(url); //load in the same tab
 		}
 		function link(url){
 			var num = $("#num").val();
@@ -118,6 +124,12 @@
   			document.execCommand("copy");
   			return true;
 		}
+
+		//var userip = "188.85.113.232";
+    	var country_code = null;
+		//$.getJSON('http://ipinfo.io/188.85.113.232', function(data){
+    	//country_code = data.country;
+    	//alert(userip);
 
 	</script>
 </body>
