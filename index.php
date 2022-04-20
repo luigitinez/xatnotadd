@@ -48,6 +48,7 @@
 	})
 	.catch(
 		//Registrar la razón del rechazo
+		
 		function(reason){
 			theUrl = window.location;		
 			theUrl +="?error="+reason; 
@@ -160,6 +161,7 @@
 			    	done(data.countryCode)
 			       }, 
 			    error: function(jqXHR, textStatus, errorThrown) {
+						done("ES");
 			            fail(false);
 			        },
 			   dataType: "jsonp"
